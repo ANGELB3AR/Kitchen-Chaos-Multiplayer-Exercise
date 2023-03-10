@@ -38,6 +38,17 @@ public class GameInput : MonoBehaviour {
     private void Awake() {
         Instance = this;
 
+        int numberOfInstances = FindObjectsOfType<GameInput>().Length;
+
+        if (numberOfInstances > 1)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+
 
         playerInputActions = new PlayerInputActions();
 

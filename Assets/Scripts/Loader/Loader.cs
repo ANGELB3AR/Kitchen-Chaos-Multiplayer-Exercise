@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Mirror;
 
 public static class Loader {
 
@@ -20,11 +21,13 @@ public static class Loader {
     public static void Load(Scene targetScene) {
         Loader.targetScene = targetScene;
 
-        SceneManager.LoadScene(Scene.LoadingScene.ToString());
+        //SceneManager.LoadScene(Scene.LoadingScene.ToString());
+        NetworkManager.singleton.ServerChangeScene(targetScene.ToString());
     }
 
     public static void LoaderCallback() {
-        SceneManager.LoadScene(targetScene.ToString());
+        //SceneManager.LoadScene(targetScene.ToString());
+        NetworkManager.singleton.ServerChangeScene(targetScene.ToString());
     }
 
 }

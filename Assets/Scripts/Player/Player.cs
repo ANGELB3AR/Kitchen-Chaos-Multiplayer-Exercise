@@ -18,11 +18,11 @@ public class Player : MonoBehaviour, IKitchenObjectParent {
 
 
     [SerializeField] private float moveSpeed = 7f;
-    [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask countersLayerMask;
     [SerializeField] private Transform kitchenObjectHoldPoint;
 
 
+    private GameInput gameInput;
     private bool isWalking;
     private Vector3 lastInteractDir;
     private BaseCounter selectedCounter;
@@ -37,6 +37,8 @@ public class Player : MonoBehaviour, IKitchenObjectParent {
     }
 
     private void Start() {
+        gameInput = FindObjectOfType<GameInput>();
+
         gameInput.OnInteractAction += GameInput_OnInteractAction;
         gameInput.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
     }
