@@ -21,12 +21,10 @@ public static class Loader {
     public static void Load(Scene targetScene) {
         Loader.targetScene = targetScene;
 
-        //SceneManager.LoadScene(Scene.LoadingScene.ToString());
         NetworkManager.singleton.ServerChangeScene(targetScene.ToString());
     }
 
     public static void LoaderCallback() {
-        //SceneManager.LoadScene(targetScene.ToString());
         NetworkManager.singleton.ServerChangeScene(targetScene.ToString());
     }
 
