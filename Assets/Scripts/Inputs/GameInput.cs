@@ -1,8 +1,9 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Mirror;
 
-public class GameInput : MonoBehaviour {
+public class GameInput : NetworkBehaviour {
 
 
     private const string PLAYER_PREFS_BINDINGS = "InputBindings";
@@ -72,18 +73,26 @@ public class GameInput : MonoBehaviour {
     }
 
     private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
+        //if (!isOwned) { return; }
+        
         OnPauseAction?.Invoke(this, EventArgs.Empty);
     }
 
     private void InteractAlternate_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
+        //if (!isOwned) { return; }
+
         OnInteractAlternateAction?.Invoke(this, EventArgs.Empty);
     }
 
     private void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
+        //if (!isOwned) { return; }
+
         OnInteractAction?.Invoke(this, EventArgs.Empty);
     }
 
     public Vector2 GetMovementVectorNormalized() {
+        //if (!isOwned) { return Vector2.zero; }
+
         Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
 
         inputVector = inputVector.normalized;
