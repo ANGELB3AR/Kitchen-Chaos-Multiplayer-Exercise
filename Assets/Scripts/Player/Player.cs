@@ -1,9 +1,10 @@
+using Mirror;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IKitchenObjectParent {
+public class Player : NetworkBehaviour, IKitchenObjectParent {
 
 
     public static Player Instance { get; private set; }
@@ -27,6 +28,11 @@ public class Player : MonoBehaviour, IKitchenObjectParent {
     private Vector3 lastInteractDir;
     private BaseCounter selectedCounter;
     private KitchenObject kitchenObject;
+
+    [SyncVar(hook = nameof(ClientHandleDisplayNameUpdated))]
+    string displayName;
+
+    public static event Action ClientOnInfoUpdated;
 
 
     private void Awake() {
@@ -147,6 +153,11 @@ public class Player : MonoBehaviour, IKitchenObjectParent {
         });
     }
 
+    public string GetDisplayName()
+    {
+        return displayName;
+    }
+
     public Transform GetKitchenObjectFollowTransform() {
         return kitchenObjectHoldPoint;
     }
@@ -171,4 +182,27 @@ public class Player : MonoBehaviour, IKitchenObjectParent {
         return kitchenObject != null;
     }
 
+    #region Server
+
+    [Server]
+    public void SetDisplayName(string newDisplayName)
+    {
+        displayName = newDisplayName;
+    }
+
+    #endregion
+
+    #region Client
+
+    void ClientHandleDisplayNameUpdated(string oldName, string newName)
+    {
+        ClientOnInfoUpdated?.Invoke();
+    }
+
+    public override void OnStopClient()
+    {
+        ClientOnInfoUpdated?.Invoke();
+    }
+
+    #endregion
 }
