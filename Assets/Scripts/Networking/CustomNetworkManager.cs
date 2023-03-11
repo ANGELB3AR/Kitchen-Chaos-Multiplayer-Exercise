@@ -11,6 +11,10 @@ public class CustomNetworkManager : NetworkManager
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
+        player = conn.identity.gameObject.GetComponent<Player>();
+
+        Players.Add(player);
+
         player.SetDisplayName($"Player {Players.Count}");
     }
 }

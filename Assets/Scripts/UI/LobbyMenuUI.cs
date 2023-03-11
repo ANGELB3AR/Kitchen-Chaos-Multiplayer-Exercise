@@ -32,4 +32,9 @@ public class LobbyMenuUI : MonoBehaviour
             playerNameTexts[i].text = "Waiting for player...";
         }
     }
+
+    public void HostLobby()
+    {
+        NetworkManager.singleton.StartHost();
+    }
 }
