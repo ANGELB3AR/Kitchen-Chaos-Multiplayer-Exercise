@@ -22,7 +22,19 @@ public class PlayerAnimator : NetworkBehaviour {
     private void Update() {
         if (!IsOwner) { return; }
 
-        animator.SetBool(IS_WALKING, player.IsWalking());
+        HandleAnimationServerAuth();
+    }
+
+    void HandleAnimationServerAuth()
+    {
+        bool isWalking = player.IsWalking();
+        HandleMovementServerRpc(isWalking);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    void HandleMovementServerRpc(bool isWalking)
+    {
+        animator.SetBool(IS_WALKING, isWalking);
     }
 
 }
