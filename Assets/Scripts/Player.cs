@@ -7,6 +7,7 @@ using UnityEngine;
 public class Player : NetworkBehaviour, IKitchenObjectParent {
 
     public static event EventHandler OnAnyPlayerSpawned;
+    public static event EventHandler OnAnyPickedSomething;
 
     new public static void ResetStaticData()
     {
@@ -178,6 +179,7 @@ public class Player : NetworkBehaviour, IKitchenObjectParent {
 
         if (kitchenObject != null) {
             OnPickedSomething?.Invoke(this, EventArgs.Empty);
+            OnAnyPickedSomething?.Invoke(this, EventArgs.Empty);
         }
     }
 
