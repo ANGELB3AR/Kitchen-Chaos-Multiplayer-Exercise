@@ -8,6 +8,11 @@ public class Player : NetworkBehaviour, IKitchenObjectParent {
 
     public static event EventHandler OnAnyPlayerSpawned;
 
+    new public static void ResetStaticData()
+    {
+        OnAnyPlayerSpawned = null;
+    }
+
 
     public static Player LocalInstance { get; private set; }
 
