@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Player : NetworkBehaviour, IKitchenObjectParent {
 
+    public static event EventHandler OnAnyPlayerSpawned;
+
 
     public static Player LocalInstance { get; private set; }
 
@@ -39,6 +41,7 @@ public class Player : NetworkBehaviour, IKitchenObjectParent {
         if (!IsOwner) { return; }
 
         LocalInstance = this;
+        OnAnyPlayerSpawned?.Invoke(this, EventArgs.Empty);
     }
 
     private void GameInput_OnInteractAlternateAction(object sender, EventArgs e) {
